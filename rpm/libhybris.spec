@@ -8,6 +8,8 @@ License:   Apache 2.0
 URL:	   https://github.com/libhybris/libhybris
 Source0:   %{name}-%{version}.tar.bz2
 BuildRequires: libtool
+# Needed for --enable-wayland
+BuildRequires: pkgconfig(wayland-client)
 
 %description
 %{summary}.
@@ -133,6 +135,25 @@ Provides: libOpenVG-devel
 %description libOpenVG-devel
 %{summary}.
 
+%package libwayland-egl
+Summary: Wayland EGL for hybris
+Group: Development/Libraries
+Requires: %{name} = %{version}-%{release}
+Provides: libwayland-egl
+
+%description libwayland-egl
+%{summary}.
+
+%package libwayland-egl-devel
+Summary: Wayland EGL development headers for hybris
+Group: Development/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libwayland-egl = %{version}-%{release}
+Provides: libwayland-egl-devel
+
+%description libwayland-egl-devel
+%{summary}.
+
 %package libhardware
 Summary: The libhardware wrapping of libhybris
 Requires(post): /sbin/ldconfig
@@ -183,6 +204,7 @@ Group:   System/Libraries
 cd libhybris/hybris
 autoreconf -v -f -i
 %configure \
+--enable-wayland \
 %ifarch %{arm}
 --enable-arch=arm \
 %endif
@@ -209,6 +231,9 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 
 %post libGLESv2 -p /sbin/ldconfig
 %postun libGLESv2 -p /sbin/ldconfig
+
+%post libwayland-egl -p /sbin/ldconfig
+%postun libwayland-egl -p /sbin/ldconfig
 
 %post libhardware -p /sbin/ldconfig
 %postun libhardware -p /sbin/ldconfig
@@ -276,6 +301,15 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %files libOpenVG-devel
 %defattr(-,root,root,-)
 %{_includedir}/VG/*.h
+
+%files libwayland-egl
+%defattr(-,root,root,-)
+%{_libdir}/libhybris/eglplatform_wayland.so
+%{_libdir}/libwayland-egl.so.*
+
+%files libwayland-egl-devel
+%defattr(-,root,root,-)
+%{_libdir}/libwayland-egl.so
 
 %files libhardware
 %defattr(-,root,root,-)
