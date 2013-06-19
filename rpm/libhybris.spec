@@ -163,6 +163,15 @@ Group:   System/Libraries
 %description libhardware
 %{summary}.
 
+%package libhardware-devel
+Summary: The development headers of libhardware wrapping of libhybris
+Requires: %{name}-devel = %{version}-%{release}
+Requires: %{name}-libhardware = %{version}-%{release}
+Group: Development/Libraries
+
+%description libhardware-devel
+%{summary}.
+
 %package libui
 Summary: The libui of libhybris
 Requires(post): /sbin/ldconfig
@@ -181,13 +190,76 @@ Group:   System/Libraries
 %description libui-devel
 %{summary}.
 
-%package libhardware-devel
-Summary: The development headers of libhardware wrapping of libhybris
-Requires: %{name}-devel = %{version}-%{release}
-Requires: %{name}-libhardware = %{version}-%{release}
-Group: Development/Libraries
+%package libsf
+Summary: The libsf of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
 
-%description libhardware-devel
+%description libsf
+%{summary}.
+
+%package libsf-devel
+Summary: The development files for libsf of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libsf-devel
+%{summary}.
+
+%package libcamera
+Summary: The libcamera of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libcamera
+%{summary}.
+
+%package libcamera-devel
+Summary: The development files for libcamera of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libcamera-devel
+%{summary}.
+
+%package libis
+Summary: The libis of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libis
+%{summary}.
+
+%package libis-devel
+Summary: The development files for libis of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libis-devel
+%{summary}.
+
+%package libsync
+Summary: The libsync of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libsync
+%{summary}.
+
+%package libsync-devel
+Summary: The development files for libsync of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+
+%description libsync-devel
 %{summary}.
 
 %package tests
@@ -198,7 +270,7 @@ Group:   System/Libraries
 %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}
 
 %build
 cd libhybris/hybris
@@ -241,6 +313,18 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %post libui -p /sbin/ldconfig
 %postun libui -p /sbin/ldconfig
 
+%post libsf -p /sbin/ldconfig
+%postun libsf -p /sbin/ldconfig
+
+%post libcamera -p /sbin/ldconfig
+%postun libcamera -p /sbin/ldconfig
+
+%post libis -p /sbin/ldconfig
+%postun libis -p /sbin/ldconfig
+
+%post libsync -p /sbin/ldconfig
+%postun libsync -p /sbin/ldconfig
+
 %files
 %defattr(-,root,root,-)
 %doc libhybris/hybris/AUTHORS libhybris/hybris/COPYING
@@ -249,8 +333,12 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/android/cutils/*.h
+%{_includedir}/android/linux/*.h
 %{_includedir}/android/system/*.h
 %{_includedir}/android/sync/*.h
+%{_includedir}/android/version.h
+%{_includedir}/hybris/input/*.h
+%{_includedir}/hybris/surface_flinger/*.h
 %{_libdir}/libhybris-common.so
 
 %files libEGL
@@ -267,6 +355,7 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %{_includedir}/hybris/eglplatformcommon/*.h
 %{_libdir}/libEGL.so
 %{_libdir}/libhybris-eglplatformcommon.so
+%{_libdir}/pkgconfig/egl.pc
 
 %files libGLESv1
 %defattr(-,root,root,-)
@@ -284,6 +373,7 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %defattr(-,root,root,-)
 %{_includedir}/GLES2/*.h
 %{_libdir}/libGLESv2.so
+%{_libdir}/pkgconfig/glesv2.pc
 
 %files libOpenCL
 %defattr(-,root,root,-)
@@ -310,6 +400,7 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %files libwayland-egl-devel
 %defattr(-,root,root,-)
 %{_libdir}/libwayland-egl.so
+%{_libdir}/pkgconfig/wayland-egl.pc
 
 %files libhardware
 %defattr(-,root,root,-)
@@ -327,7 +418,40 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %files libui-devel
 %defattr(-,root,root,-)
 %{_libdir}/libui.so
-%{_includedir}/hybris/ui_compatibility_layer.h
+%{_includedir}/hybris/ui/ui_compatibility_layer.h
+
+%files libsf
+%defattr(-,root,root,-)
+%{_libdir}/libsf.so.*
+
+%files libsf-devel
+%defattr(-,root,root,-)
+%{_libdir}/libsf.so
+
+%files libcamera
+%defattr(-,root,root,-)
+%{_libdir}/libcamera.so.*
+
+%files libcamera-devel
+%defattr(-,root,root,-)
+%{_libdir}/libcamera.so
+%{_includedir}/hybris/camera/*.h
+
+%files libis
+%defattr(-,root,root,-)
+%{_libdir}/libis.so.*
+
+%files libis-devel
+%defattr(-,root,root,-)
+%{_libdir}/libis.so
+
+%files libsync
+%defattr(-,root,root,-)
+%{_libdir}/libsync.so.*
+
+%files libsync-devel
+%defattr(-,root,root,-)
+%{_libdir}/libsync.so
 
 %files tests
 %defattr(-,root,root,-)
