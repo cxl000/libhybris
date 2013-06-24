@@ -356,6 +356,7 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %{_libdir}/libEGL.so
 %{_libdir}/libhybris-eglplatformcommon.so
 %{_libdir}/pkgconfig/egl.pc
+%{_libdir}/pkgconfig/hybris-egl-platform.pc
 
 %files libGLESv1
 %defattr(-,root,root,-)
