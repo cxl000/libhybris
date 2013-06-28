@@ -1,4 +1,4 @@
-Name:      libhybris	
+Name:      libhybris
 Version:   0.0.0
 Release:   1%{?dist}
 Summary:   Hybris allowing us to use bionic-based HW adaptations in glibc systems
@@ -26,6 +26,7 @@ Requires: %{name} = %{version}-%{release}
 Summary: EGL for hybris
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libhardware = %{version}-%{release}
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Provides: libEGL
@@ -139,6 +140,9 @@ Provides: libOpenVG-devel
 Summary: Wayland EGL for hybris
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libhardware = %{version}-%{release}
+Requires: %{name}-libEGL = %{version}-%{release}
+Requires: %{name}-libsync = %{version}-%{release}
 Provides: libwayland-egl
 
 %description libwayland-egl
@@ -159,15 +163,16 @@ Summary: The libhardware wrapping of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description libhardware
 %{summary}.
 
 %package libhardware-devel
 Summary: The development headers of libhardware wrapping of libhybris
+Group: Development/Libraries
 Requires: %{name}-devel = %{version}-%{release}
 Requires: %{name}-libhardware = %{version}-%{release}
-Group: Development/Libraries
 
 %description libhardware-devel
 %{summary}.
@@ -177,6 +182,7 @@ Summary: The libui of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description libui
 %{summary}.
@@ -186,6 +192,8 @@ Summary: The development files for libui of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libui = %{version}-%{release}
 
 %description libui-devel
 %{summary}.
@@ -195,6 +203,7 @@ Summary: The libsf of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description libsf
 %{summary}.
@@ -204,6 +213,8 @@ Summary: The development files for libsf of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libsf = %{version}-%{release}
 
 %description libsf-devel
 %{summary}.
@@ -213,6 +224,7 @@ Summary: The libcamera of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description libcamera
 %{summary}.
@@ -222,6 +234,8 @@ Summary: The development files for libcamera of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libcamera = %{version}-%{release}
 
 %description libcamera-devel
 %{summary}.
@@ -231,6 +245,7 @@ Summary: The libis of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description libis
 %{summary}.
@@ -240,6 +255,8 @@ Summary: The development files for libis of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libis = %{version}-%{release}
 
 %description libis-devel
 %{summary}.
@@ -249,6 +266,7 @@ Summary: The libsync of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description libsync
 %{summary}.
@@ -258,6 +276,8 @@ Summary: The development files for libsync of libhybris
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libsync = %{version}-%{release}
 
 %description libsync-devel
 %{summary}.
@@ -265,6 +285,15 @@ Group:   System/Libraries
 %package tests
 Summary: Tests for %{name}
 Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libEGL = %{version}-%{release}
+Requires: %{name}-libGLESv2 = %{version}-%{release}
+Requires: %{name}-libcamera = %{version}-%{release}
+Requires: %{name}-libhardware = %{version}-%{release}
+Requires: %{name}-libis = %{version}-%{release}
+Requires: %{name}-libsf = %{version}-%{release}
+Requires: %{name}-libui = %{version}-%{release}
+Requires: %{name}-libsync = %{version}-%{release}
 
 %description tests
 %{summary}.
@@ -276,12 +305,12 @@ Group:   System/Libraries
 cd libhybris/hybris
 autoreconf -v -f -i
 %configure \
---enable-wayland \
+  --enable-wayland \
 %ifarch %{arm}
---enable-arch=arm \
+  --enable-arch=arm \
 %endif
 %ifarch %{ix86}
---enable-arch=x86 \
+  --enable-arch=x86 \
 %endif
 %{nil}
 
