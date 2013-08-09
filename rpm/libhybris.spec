@@ -480,7 +480,7 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %defattr(-,root,root,-)
 %{_includedir}/GLES/*.h
 %{_libdir}/libGLESv1_CM.so
-%{_libdir}/pkgconfig/glesv2.pc
+%{_libdir}/pkgconfig/glesv1_cm.pc
 
 %files libGLESv2
 %defattr(-,root,root,-)
