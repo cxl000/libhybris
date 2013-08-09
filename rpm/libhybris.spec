@@ -322,9 +322,12 @@ autoreconf -v -f -i
 make %{?_smp_mflags}
 
 %install
+WITH_ANDROID_HEADERS=`pwd`/include
 rm -rf $RPM_BUILD_ROOT
 cd libhybris/hybris
 make install DESTDIR=$RPM_BUILD_ROOT
+mkdir %{buildroot}/%{_includedir}/android
+cp -a $WITH_ANDROID_HEADERS/* %{buildroot}/%{_includedir}/android/
 
 # Remove the static libraries.
 rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
@@ -370,7 +373,12 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %{_includedir}/android/linux/*.h
 %{_includedir}/android/system/*.h
 %{_includedir}/android/sync/*.h
-%{_includedir}/android/version.h
+%{_includedir}/android/android-version.h
+%{_includedir}/android/libnfc-nxp/*.h
+%{_includedir}/android/hardware/*.h
+%{_includedir}/android/android/*.h
+%{_includedir}/android/hardware_legacy/*.h
+%{_includedir}/android/private/*.h
 %{_includedir}/hybris/input/*.h
 %{_includedir}/hybris/surface_flinger/*.h
 %{_libdir}/libhybris-common.so
