@@ -401,6 +401,9 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %post libEGL -p /sbin/ldconfig
 %postun libEGL -p /sbin/ldconfig
 
+%post libGLESv1 -p /sbin/ldconfig
+%postun libGLESv1 -p /sbin/ldconfig
+
 %post libGLESv2 -p /sbin/ldconfig
 %postun libGLESv2 -p /sbin/ldconfig
 
