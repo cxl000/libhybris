@@ -7,7 +7,7 @@ Group:	   System
 License:   Apache 2.0
 URL:	   https://github.com/libhybris/libhybris
 Source0:   %{name}-%{version}.tar.bz2
-Source1:   include.tar.bz2
+Source1:   _service:tar_git:include.tar.bz2
 BuildRequires: libtool
 # Needed for --enable-wayland
 BuildRequires: pkgconfig(wayland-client)
@@ -301,6 +301,7 @@ Requires: %{name}-libsync = %{version}-%{release}
 
 %prep
 %setup -q -n %{name}-%{version}
+ls %{_sourcedir}
 tar -xf %{SOURCE10}
 
 %build
