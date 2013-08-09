@@ -7,6 +7,7 @@ Group:	   System
 License:   Apache 2.0
 URL:	   https://github.com/libhybris/libhybris
 Source0:   %{name}-%{version}.tar.bz2
+Source1:   include.tar.bz2
 BuildRequires: libtool
 # Needed for --enable-wayland
 BuildRequires: pkgconfig(wayland-client)
@@ -300,10 +301,13 @@ Requires: %{name}-libsync = %{version}-%{release}
 
 %prep
 %setup -q -n %{name}-%{version}
+tar -xf %{SOURCE10}
 
 %build
+WITH_ANDROID_HEADERS=`pwd`/include
 cd libhybris/hybris
 autoreconf -v -f -i
+%configure --help
 %configure \
   --enable-wayland \
 %ifarch %{arm}
@@ -312,6 +316,7 @@ autoreconf -v -f -i
 %ifarch %{ix86}
   --enable-arch=x86 \
 %endif
+  --with-android-headers=$WITH_ANDROID_HEADERS \
 %{nil}
 
 make %{?_smp_mflags}
