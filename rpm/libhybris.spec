@@ -283,6 +283,69 @@ Requires: %{name}-libsync = %{version}-%{release}
 %description libsync-devel
 %{summary}.
 
+%package libnfc
+Summary: The libnfc of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+
+%description libnfc
+%{summary}.
+
+%package libnfc-devel
+Summary: The development files for libnfc of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libnfc = %{version}-%{release}
+
+%description libnfc-devel
+%{summary}.
+
+%package hwcomposerwindow
+Summary: The wcomposerwindow of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+
+%description hwcomposerwindow
+%{summary}.
+
+%package hwcomposerwindow-devel
+Summary: The development files for hwcomposerwindow of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-hwcomposerwindow = %{version}-%{release}
+
+%description hwcomposerwindow-devel
+%{summary}.
+
+%package libandroid-properties
+Summary: The libandroid-properties of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+
+%description libandroid-properties
+%{summary}.
+
+%package libandroid-properties-devel
+Summary: The development files for libandroid-properties of libhybris
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Group:   System/Libraries
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libandroid-properties = %{version}-%{release}
+
+%description libandroid-properties-devel
+%{summary}.
+
 %package tests
 Summary: Tests for %{name}
 Group:   System/Libraries
@@ -362,6 +425,15 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %post libsync -p /sbin/ldconfig
 %postun libsync -p /sbin/ldconfig
 
+%post libnfc -p /sbin/ldconfig
+%postun libnfc -p /sbin/ldconfig
+
+%post hwcomposerwindow -p /sbin/ldconfig
+%postun hwcomposerwindow -p /sbin/ldconfig
+
+%post libandroid-properties -p /sbin/ldconfig
+%postun libandroid-properties -p /sbin/ldconfig
+
 %files
 %defattr(-,root,root,-)
 %doc libhybris/hybris/AUTHORS libhybris/hybris/COPYING
@@ -402,11 +474,13 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 
 %files libGLESv1
 %defattr(-,root,root,-)
-# We don't have implementation of GLESv1 atm.
+%{_libdir}/libGLESv1_CM.so.1*
 
 %files libGLESv1-devel
 %defattr(-,root,root,-)
 %{_includedir}/GLES/*.h
+%{_libdir}/libGLESv1_CM.so
+%{_libdir}/pkgconfig/glesv2.pc
 
 %files libGLESv2
 %defattr(-,root,root,-)
@@ -453,6 +527,7 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %defattr(-,root,root,-)
 %{_libdir}/libhardware.so
 %{_includedir}/android/hardware/*.h
+%{_libdir}/pkgconfig/libhardware.pc
 
 %files libui
 %defattr(-,root,root,-)
@@ -495,6 +570,42 @@ rm %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/libhybris/*.la
 %files libsync-devel
 %defattr(-,root,root,-)
 %{_libdir}/libsync.so
+%{_libdir}/pkgconfig/libsync.pc
+
+%files libnfc
+%defattr(-,root,root,-)
+%{_libdir}/libnfc_ndef_nxp.so.*
+%{_libdir}/libnfc_nxp.so.*
+
+%files libnfc-devel
+%defattr(-,root,root,-)
+%{_libdir}/libnfc_ndef_nxp.so
+%{_libdir}/libnfc_nxp.so
+%{_libdir}/pkgconfig/libnfc_ndef_nxp.pc
+%{_libdir}/pkgconfig/libnfc_nxp.pc
+
+%files hwcomposerwindow
+%defattr(-,root,root,-)
+%{_libdir}/libhybris-hwcomposerwindow.so.1
+%{_libdir}/libhybris-hwcomposerwindow.so.1.0.0
+%{_libdir}/libhybris/eglplatform_hwcomposer.so
+
+%files hwcomposerwindow-devel
+%defattr(-,root,root,-)
+%{_includedir}/hybris/hwcomposerwindow/hwcomposer_window.h
+%{_libdir}/libhybris-hwcomposerwindow.so
+%{_libdir}/pkgconfig/hwcomposer-egl.pc
+
+%files libandroid-properties
+%defattr(-,root,root,-)
+%{_bindir}/getprop
+%{_bindir}/setprop
+%{_libdir}/libandroid-properties.so.*
+
+%files libandroid-properties-devel
+%defattr(-,root,root,-)
+%{_includedir}/hybris/properties/properties.h
+%{_libdir}/libandroid-properties.so
 
 %files tests
 %defattr(-,root,root,-)
