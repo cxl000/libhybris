@@ -1,5 +1,5 @@
 Name:      libhybris
-Version:   0.0.0
+Version:   0.1.0
 Release:   1%{?dist}
 Summary:   Hybris allowing us to use bionic-based HW adaptations in glibc systems
 
